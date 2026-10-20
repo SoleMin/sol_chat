@@ -1,0 +1,40 @@
+# LoRA 학습 설정 (python -m training.train --config configs/train.yaml)
+# Colab 에서는 Drive 의 sol_chat 폴더를 작업 폴더로 실행하므로 경로는 프로젝트 기준 상대 경로.
+
+run_name: sol-lora-v1
+
+# 학습할 베이스 모델 (Hugging Face 모델 ID). TBD-2: 확정 전 제안안.
+base_model: Qwen/Qwen2.5-1.5B-Instruct
+
+data:
+  train_file: data/examples/sample.jsonl   # messages 형식 JSONL. 내 데이터가 생기면 data/raw/... 로 교체
+  valid_ratio: 0.1                          # 학습 데이터 중 검증용 비율 (valid_file 이 없을 때)
+  valid_file: null
+  max_length: 1024                          # 대화 하나의 최대 토큰 수 (넘으면 뒤를 자름)
+  # 데이터에 system 메시지가 없을 때 넣을 시스템 프롬프트.
+  # 서비스(configs/model.yaml)와 같게 두면 학습/서비스 형식이 일치한다. null 이면 model.yaml 값을 사용.
+  system_prompt: null
+
+lora:
+  r: 16                 # 어댑터 랭크 (클수록 표현력↑, 메모리↑)
+  alpha: 32             # 스케일 (보통 r 의 2배)
+  dropout: 0.05
+  target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+
+quantization:
+  load_in_4bit: false   # GPU 메모리가 부족하면 true (QLoRA)
+
+training:
+  epochs: 3
+  learning_rate: 2.0e-4
+  batch_size: 4
+  gradient_accumulation_steps: 4
+  warmup_ratio: 0.05
+  weight_decay: 0.0
+  logging_steps: 5
+  gradient_checkpointing: true
+  seed: 42
+
+output:
+  checkpoint_dir: outputs/checkpoints    # 중간 저장 (Colab 세션이 끊겨도 이어서 학습)
+  adapter_dir: outputs/adapters          # 최종 어댑터: outputs/adapters/<run_name>/

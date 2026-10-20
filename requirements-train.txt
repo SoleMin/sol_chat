@@ -1,0 +1,7 @@
+# 학습/로컬 모델 추론용. Colab GPU 에서 설치한다 (PC 서비스 실행에는 필요 없음).
+#   pip install -r requirements.txt -r requirements-train.txt
+torch>=2.4
+transformers>=4.56
+peft>=0.17
+accelerate>=1.0
+bitsandbytes>=0.45 ; platform_system == "Linux"   # 4bit QLoRA (Colab 은 Linux)

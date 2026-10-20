@@ -1,0 +1,134 @@
+:root {
+  --bg: #f7f7f8;
+  --panel: #ffffff;
+  --sidebar: #f0f1f3;
+  --text: #1f2328;
+  --muted: #6b7280;
+  --border: #e3e5e8;
+  --accent: #3b6ef5;
+  --accent-text: #ffffff;
+  --user-bubble: #3b6ef5;
+  --user-text: #ffffff;
+  --bot-bubble: #ffffff;
+  --error: #c62828;
+  --error-bg: #fdecea;
+  --radius: 14px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17181b;
+    --panel: #1f2125;
+    --sidebar: #141518;
+    --text: #e8e9ec;
+    --muted: #9aa0aa;
+    --border: #2d3036;
+    --accent: #6b8cff;
+    --bot-bubble: #24272c;
+    --error: #ff8a80;
+    --error-bg: #3a1f1f;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+}
+[hidden] { display: none !important; }
+button, select, textarea, input { font: inherit; color: inherit; }
+
+.btn-primary {
+  background: var(--accent); color: var(--accent-text);
+  border: 0; border-radius: 10px; padding: 9px 14px; cursor: pointer; font-weight: 600;
+}
+.btn-primary:disabled { opacity: .5; cursor: default; }
+.btn-ghost { background: none; border: 0; color: var(--muted); cursor: pointer; padding: 8px; }
+.btn-ghost:hover { color: var(--text); }
+.error { color: var(--error); font-size: 14px; }
+
+/* 로그인 */
+.login { min-height: 100%; display: grid; place-items: center; padding: 16px; }
+.login-card {
+  width: min(360px, 100%); background: var(--panel); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 28px; display: grid; gap: 12px;
+}
+.login-card h1 { margin: 0; font-size: 24px; }
+.login-card p { margin: 0; color: var(--muted); }
+.login-card input {
+  padding: 11px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg);
+}
+
+/* 레이아웃 */
+.app { display: flex; height: 100%; }
+.sidebar {
+  width: 270px; flex-shrink: 0; background: var(--sidebar); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+}
+.sidebar-head { display: flex; align-items: center; justify-content: space-between; padding: 14px; gap: 8px; }
+.brand { font-weight: 700; font-size: 17px; }
+.session-list { list-style: none; margin: 0; padding: 0 8px; overflow-y: auto; flex: 1; }
+.session-item {
+  display: flex; align-items: center; gap: 4px; border-radius: 9px; padding: 9px 10px; cursor: pointer;
+  color: var(--text);
+}
+.session-item:hover { background: var(--border); }
+.session-item.active { background: var(--panel); border: 1px solid var(--border); }
+.session-item .title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.session-item .delete { visibility: hidden; padding: 2px 6px; }
+.session-item:hover .delete, .session-item.active .delete { visibility: visible; }
+.sidebar-foot { padding: 10px 14px; border-top: 1px solid var(--border); }
+
+.main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.topbar {
+  display: flex; align-items: center; gap: 10px; padding: 10px 16px;
+  border-bottom: 1px solid var(--border); background: var(--panel);
+}
+.menu-btn { display: none; font-size: 18px; }
+.chat-title { flex: 1; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#model-select {
+  max-width: 50%; padding: 6px 8px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg);
+}
+
+/* 메시지 */
+.messages { flex: 1; overflow-y: auto; padding: 20px 16px; display: flex; flex-direction: column; gap: 14px; }
+.empty { margin: auto; text-align: center; color: var(--muted); }
+.empty h2 { color: var(--text); margin: 0 0 6px; font-size: 22px; }
+.msg {
+  max-width: min(760px, 88%); padding: 11px 14px; border-radius: var(--radius);
+  white-space: pre-wrap; word-break: break-word; line-height: 1.6;
+}
+.msg.user { align-self: flex-end; background: var(--user-bubble); color: var(--user-text); border-bottom-right-radius: 4px; }
+.msg.assistant {
+  align-self: flex-start; background: var(--bot-bubble); border: 1px solid var(--border); border-bottom-left-radius: 4px;
+}
+.msg.error { align-self: center; background: var(--error-bg); color: var(--error); font-size: 14px; }
+.msg.pending::after { content: "▍"; animation: blink 1s steps(2) infinite; margin-left: 1px; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* 입력창 */
+.composer {
+  display: flex; gap: 10px; padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border); background: var(--panel); align-items: flex-end;
+}
+.composer textarea {
+  flex: 1; resize: none; max-height: 180px; padding: 10px 12px;
+  border: 1px solid var(--border); border-radius: 12px; background: var(--bg); line-height: 1.5;
+}
+.composer textarea:focus, .login-card input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+/* 휴대폰: 사이드바를 서랍처럼 */
+.backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 10; }
+@media (max-width: 760px) {
+  .menu-btn { display: inline-block; }
+  .sidebar {
+    position: fixed; inset: 0 auto 0 0; z-index: 20; transform: translateX(-100%);
+    transition: transform .2s ease; width: 80%; max-width: 300px;
+  }
+  .sidebar.open { transform: none; }
+  .msg { max-width: 92%; }
+  #model-select { max-width: 45%; }
+}

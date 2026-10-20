@@ -1,0 +1,55 @@
+# 챗봇 모델 / 생성 설정. 코드 수정 없이 이 파일만 바꿔서 동작을 조정합니다.
+
+# 웹 화면과 CLI에서 기본으로 쓸 모델 (아래 models 의 키 이름)
+default_model: gemini-flash
+
+# 모든 대화 맨 앞에 들어가는 시스템 프롬프트
+system_prompt: |
+  너는 "솔챗"이라는 이름의 친절한 한국어 AI 어시스턴트야.
+  사용자의 질문에 정확하고 이해하기 쉽게 한국어로 답해.
+  모르는 것은 모른다고 솔직하게 말해.
+
+# 생성 파라미터 (모든 모델 공통 기본값)
+generation:
+  temperature: 0.7
+  top_p: 0.95
+  max_tokens: 1024
+
+# 대화 히스토리를 모델에 넣을 때의 제한 (넘으면 오래된 턴부터 잘림)
+history:
+  max_turns: 10        # user+assistant 한 쌍 = 1턴
+  max_chars: 12000     # 시스템 프롬프트 제외 히스토리 전체 글자 수
+
+# 사용할 수 있는 모델 목록. 웹 화면의 모델 선택에 그대로 노출됩니다.
+#   backend: api   -> OpenAI 호환 API (OpenRouter, Colab vLLM 등)
+#   backend: local -> transformers 로 직접 로드 (+ LoRA 어댑터), torch 필요
+models:
+  gemini-flash:
+    label: "Gemini 2.5 Flash (OpenRouter)"
+    backend: api
+    base_url: https://openrouter.ai/api/v1
+    model: google/gemini-2.5-flash     # OpenRouter 모델 ID (https://openrouter.ai/models)
+    api_key_env: OPENROUTER_API_KEY
+
+  # Stage 3에서 학습할 베이스 모델을 학습 전에 미리 써 보기 (OpenRouter에 있는 Qwen)
+  # qwen-base:
+  #   label: "Qwen 2.5 7B Instruct (OpenRouter)"
+  #   backend: api
+  #   base_url: https://openrouter.ai/api/v1
+  #   model: qwen/qwen-2.5-7b-instruct
+  #   api_key_env: OPENROUTER_API_KEY
+
+  # Stage 3 (a): Colab에서 vLLM으로 띄운 내 LoRA 모델 (notebooks/serve_vllm_colab.ipynb)
+  # my-lora-colab:
+  #   label: "내 LoRA 모델 (Colab)"
+  #   backend: api
+  #   base_url: https://<터널주소>.trycloudflare.com/v1
+  #   model: sol-lora
+  #   api_key_env: COLAB_VLLM_API_KEY
+
+  # Stage 3 (b): PC에서 직접 로드 (requirements-train.txt 필요, CPU면 느림)
+  # my-lora-local:
+  #   label: "내 LoRA 모델 (로컬)"
+  #   backend: local
+  #   base_model: Qwen/Qwen2.5-1.5B-Instruct
+  #   adapter_path: outputs/adapters/sol-lora-v1
