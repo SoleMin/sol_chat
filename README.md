@@ -48,6 +48,17 @@ pip install -r requirements.txt
 copy .env.example .env
 ```
 
+conda를 쓴다면 venv 대신 이렇게 해도 됩니다 (conda 환경은 기본적으로 사용자 폴더에 만들어져 드라이브 밖에 있습니다).
+패키지는 `conda install` 이 아니라 pip 로 설치합니다.
+
+```powershell
+conda create -n sol_chat python=3.11 -y
+conda activate sol_chat
+cd "G:\내 드라이브\sol_chat"
+pip install -r requirements.txt
+copy .env.example .env
+```
+
 `.env` 를 열어서 채웁니다.
 
 - `OPENROUTER_API_KEY`: https://openrouter.ai/keys 에서 발급
