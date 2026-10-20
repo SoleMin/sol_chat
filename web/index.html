@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>솔챗 · sol_chat</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 접속 비밀번호 화면 -->
+  <div id="login" class="login" hidden>
+    <form id="login-form" class="login-card">
+      <h1>솔챗</h1>
+      <p>접속 비밀번호를 입력해주세요.</p>
+      <input id="login-code" type="password" autocomplete="current-password" placeholder="접속 비밀번호" required>
+      <button type="submit">들어가기</button>
+      <p id="login-error" class="error" hidden></p>
+    </form>
+  </div>
+
+  <!-- 채팅 화면 -->
+  <div id="app" class="app" hidden>
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-head">
+        <span class="brand">솔챗</span>
+        <button id="new-chat" class="btn-primary" type="button">+ 새 대화</button>
+      </div>
+      <ul id="session-list" class="session-list"></ul>
+      <div class="sidebar-foot">
+        <button id="logout" class="btn-ghost" type="button">비밀번호 다시 입력</button>
+      </div>
+    </aside>
+    <div id="backdrop" class="backdrop" hidden></div>
+
+    <main class="main">
+      <header class="topbar">
+        <button id="menu" class="btn-ghost menu-btn" type="button" aria-label="대화 목록">☰</button>
+        <span id="chat-title" class="chat-title">새 대화</span>
+        <select id="model-select" aria-label="모델 선택"></select>
+      </header>
+
+      <section id="messages" class="messages" aria-live="polite">
+        <div id="empty" class="empty">
+          <h2>무엇이든 물어보세요</h2>
+          <p>Enter로 보내고, Shift+Enter로 줄을 바꿔요.</p>
+        </div>
+      </section>
+
+      <form id="composer" class="composer">
+        <textarea id="input" rows="1" placeholder="메시지를 입력하세요" required></textarea>
+        <button id="send" class="btn-primary" type="submit">보내기</button>
+      </form>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

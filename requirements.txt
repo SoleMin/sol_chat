@@ -1,0 +1,11 @@
+# 서비스(챗봇 코어 + 서버) 실행용. 학습용 패키지는 requirements-train.txt (Colab에서만 설치)
+fastapi>=0.115
+uvicorn[standard]>=0.30
+openai>=1.40
+pydantic>=2.7
+pyyaml>=6.0
+python-dotenv>=1.0
+
+# 테스트
+pytest>=8.0
+httpx>=0.27

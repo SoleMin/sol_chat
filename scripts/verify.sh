@@ -9,9 +9,13 @@ if [ -d node_modules ]; then
   npx tsc --noEmit
 fi
 
-# --- Add project checks here, e.g.: ---
-# npm test --silent
-# npm run lint
+# Python unit tests (no API key / model download needed; skipped until pip install)
+PYTHON="${PYTHON:-python}"
+if command -v "$PYTHON" >/dev/null 2>&1 && "$PYTHON" -c "import pytest, fastapi, openai" >/dev/null 2>&1; then
+  "$PYTHON" -m pytest -q
+else
+  echo "verify: skipped pytest (run: pip install -r requirements.txt)"
+fi
 
 echo "verify: OK"
 exit 0
