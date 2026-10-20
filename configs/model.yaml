@@ -47,6 +47,12 @@ models:
   #   model: sol-lora
   #   api_key_env: COLAB_VLLM_API_KEY
 
+  # 로컬 로드 확인용: 어댑터 없이 베이스 모델만 PC에서 직접 로드 (requirements-train.txt 필요)
+  # qwen-local:
+  #   label: "Qwen 2.5 1.5B (로컬, 학습 전)"
+  #   backend: local
+  #   base_model: Qwen/Qwen2.5-1.5B-Instruct
+
   # Stage 3 (b): PC에서 직접 로드 (requirements-train.txt 필요, CPU면 느림)
   # my-lora-local:
   #   label: "내 LoRA 모델 (로컬)"
