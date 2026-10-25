@@ -136,6 +136,10 @@ Colab 세션이 살아 있는 동안만 동작합니다.
 **(b) PC에서 직접 로드 (느림)** — PC에 `pip install -r requirements-train.txt` 후
 `configs/model.yaml` 의 `my-lora-local` 항목 주석을 풀고 서버 재시작. GPU가 없으면 CPU로 돌아서 답변이 느립니다.
 
+**(c) 웹 서버까지 전부 Colab에서** — `notebooks/serve_app_colab.ipynb` 실행 → Colab GPU에 모델을 직접 로드하고
+웹 서버와 터널까지 띄운 뒤 접속 주소와 비밀번호를 출력합니다. PC가 필요 없지만, Colab 세션이 끊기면 주소와 대화가 사라지니
+혼자 확인하는 데모용으로 쓰세요. 비밀번호는 Colab 왼쪽 🔑 보안 비밀의 `ACCESS_CODE` 에서 읽습니다.
+
 ## 테스트
 
 ```powershell
